@@ -1,5 +1,4 @@
 <?php
-
 class Conexao {
 
     private static $conn = null;

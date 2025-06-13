@@ -1,9 +1,18 @@
 <?php
-require_once '../controll/filmesControll.php';
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-$filmes = listarFilmes();
+
+require_once '../model/Filme.php';
+require_once '../dao/FilmeDao.php';
+
+$filmeDao = new FilmeDao();   
+$filmes = $filmeDao->listar();
+
+
+///criar objeto filme pegar os dados e chamar o insert 
+
 ?>
 
 
