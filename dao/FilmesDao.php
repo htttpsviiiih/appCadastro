@@ -18,11 +18,11 @@ class FilmesDao{
     }
 
     public function insert($titulo, $diretor, $genero, $classIndicativa, $ano ) {
-    $sql = "INSERT INTO filmes (nome,diretor, classificacao_indicativa, genero, ano_lancamento) 
+    $sql = "INSERT INTO filmes (nome ,diretor, classificacao_indicativa, genero, ano_lancamento) 
             VALUES (?, ?, ?, ?, ?)";
     
     $stmt = $this->conn->prepare($sql);
     
-    return $stmt->execute([$titulo, $ano, $diretor, $genero, $classIndicativa]);
+    return $stmt->execute([$titulo,  $diretor, $genero, $classIndicativa, $ano ]);
 }
 }

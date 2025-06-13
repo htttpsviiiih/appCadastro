@@ -17,7 +17,7 @@ class Conexao {
             self::$conn = 
                 new PDO("mysql:host=localhost;port=3306;dbname=filmes_bd", 
                         "root", 
-                        "", 
+                        "bancodedados", //pc da escola, em casa não tem senha  
                         $opcoes);
         }
         //Retorna a conexão

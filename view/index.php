@@ -1,5 +1,8 @@
 <?php
 require_once '../controll/filmesControll.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $filmes = listarFilmes();
 ?>
 
@@ -19,18 +22,31 @@ $filmes = listarFilmes();
         <table border="1">
             <tr>
                 <td>ID</td>
-                <td>Título</td>
-                <td>Ano</td>
+                <td>Nome</td>
                 <td>Diretor</td>
-                <td>Gênero</td>
                 <td>Classificação Indicativa</td>
+                <td>Gênero</td>
+                <td>Ano</td>
+
+
             </tr>
             <?php foreach ($filmes as $filme): ?>
                 <tr>
-                    <td><?= $filme['id'] //htmlspecialchars, perguntar para o professor, pois quero utilizar mas n entendi o uso?></td> 
+                    <td><?= $filme['id'] //htmlspecialchars, perguntar para o professor, pois quero utilizar mas n entendi o uso
+                        ?></td>
                     <td><?= $filme['nome'] ?></td>
-                    <td><?= $filme['ano_lancamento'] ?></td>
                     <td><?= $filme['diretor'] ?></td>
+                    <td><?= match ($filme['classificacao_indicativa']) {
+                            '00' => 'Livre',
+                            '10' => '10 anos',
+                            '12' => '12 anos',
+                            '14' => '14 anos',
+                            '16' => '16 anos',
+                            '18' => '18 anos',
+                            default => 'Não especificado'
+                        } ?></td>
+
+
                     <td>
                         <?= match ($filme['genero']) { //estrutura de repetição match, similar ao switch, com a diferença de que não é necessário o break
                             'A' => 'Ação',
@@ -44,15 +60,8 @@ $filmes = listarFilmes();
                             default => 'Outro'
                         } ?>
                     </td>
-                    <td><?= match($filme['classificacao_indicativa']) {
-                        '00' => 'Livre',
-                        '10' => '10 anos',
-                        '12' => '12 anos',
-                        '14' => '14 anos',
-                        '16' => '16 anos',
-                        '18' => '18 anos',
-                        default => 'Não especificado'
-                    } ?></td>
+                    <td><?= $filme['ano_lancamento'] ?></td>
+
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -61,17 +70,25 @@ $filmes = listarFilmes();
     <div class="container">
         <form action="..\controll\filmesControll.php" method="post">
             <div>
-                <label for="titulo">Título:</label>
+                <label for="titulo">Nome:</label>
                 <input type="text" id="titulo" name="titulo" required>
-            </div>
-            <div>
-                <label for="ano">Ano:</label>
-                <input type="number" id="ano" name="ano" required>
             </div>
             <div>
                 <label for="diretor">Diretor:</label>
                 <input type="text" id="diretor" name="diretor" required>
             </div>
+            <div>
+                <select name="classIndicativa" id="classIndicativa">
+                    <option value="" disabled selected>Selecione a classificação indicativa</option>
+                    <option value="00">Livre</option>
+                    <option value="10">10 anos</option>
+                    <option value="12">12 anos</option>
+                    <option value="14">14 anos</option>
+                    <option value="16">16 anos</option>
+                    <option value="18">18 anos</option>
+                </select>
+            </div>
+
             <div>
                 <select name="genero" id="genero">
                     <option value="" disabled selected>Selecione o gênero</option>
@@ -85,17 +102,14 @@ $filmes = listarFilmes();
                     <option value="O">Outro</option>
                 </select>
             </div>
+
             <div>
-                <select name="classIndicativa" id="classIndicativa">
-                    <option value="" disabled selected>Selecione a classificação indicativa</option>
-                    <option value="00">Livre</option>
-                    <option value="10">10 anos</option>
-                    <option value="12">12 anos</option>
-                    <option value="14">14 anos</option>
-                    <option value="16">16 anos</option>
-                    <option value="18">18 anos</option>
-                </select>
+                <label for="ano">Ano:</label>
+                <input type="number" id="ano" name="ano">
             </div>
+            
+          
+            
 
             <button type="submit">Cadastrar</button>
         </form>

@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once '../util/Conexao.php';
 require_once '../model/Filmes.php';
 require_once '../dao/FilmesDao.php';
@@ -11,7 +14,7 @@ if (isset($_POST['titulo'])) {
     $classIndicativa = $_POST['classIndicativa'];
 
     $filmesControll = new FilmesDao();
-    $filmesControll->insert($titulo, $ano, $genero, $diretor, $classIndicativa);
+    $filmesControll->insert($titulo,$diretor,$classIndicativa,$genero,$ano);
     
     header("Location: ../view/index.php?success=1");
     exit();
@@ -27,8 +30,8 @@ if (!empty($_POST)) {  //cerifica se o formulario foi enviad
     $dao->insert(
         $_POST['titulo'],
         $_POST['ano'],
-        $_POST['diretor'],
         $_POST['genero'],
+        $_POST['diretor'],
         $_POST['classIndicativa']
     );
     header("Location: ../view/index.php");
